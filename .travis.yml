@@ -1,0 +1,37 @@
+language: python
+python:
+- '3.6'
+jobs:
+  include:
+  - stage: Test
+    install:
+    - python -m pip install -r requirements.txt
+    - python -m pip install pytest-cov coveralls
+    script:
+    - python -m pytest reqREST/Tests/ --cov=./ -v
+    after_success:
+    - coveralls
+  - stage: Deploy to PyPI
+    env:
+      secure: RxvIhfUEBfTgmsOyFgvaQFBjcANEVyIZqJxqLoBgXmKjEVMXR8fe/nZFmXfzvWFZWrpgsO7AsEuT4ngjUVMlb9/ab3IAL0fjVzcJeZZAoUA6KtWNkfZYqiZHh1wr8uo4sNxWvywKyIbbbpKLPQz7G0jI0QMWyqxOqHF4OQKrZW0wFg36mtyS6IsPjq00zppR6JNn/QtyNnFFxx6caEQmUAESgf6Lwm+ytu4w2oDKLbFqiHxMteyUlGrVZVwwNcwYLhIHKg5mccHqkjltgJ/aIaV7O4gJ2nzUAz+EefOu4BYuaYTXwkJ+HSDKZOoN/aK4uKctTDb4KBtFBSYCNibWE8hByIiCJmFQSA07n1BWqwLcG/mYzjqOlqxWVtvvV71iCzua17ua9ukuAWoFYNyu1hRu1VvX1IWgeIIHQ4Kf1qZXYePNRfpwu0qjMx4g/6MGR8O46JLefJZKU11GltrQ+oTU6FhanZrWVeca+UgnsAZDSWmTb8Id09v9XUYJ1yrnVgtIc+/jIfKVgfcfO2Bpiuv8o0CUbpBEFh+0uc4ostGV6rnL5q6J2ZoZm32i8b6+56Wlay0JwfSX1BTBYIQ57b2E+3Qf1QGlM+m4RlX9iWxbFR1xe6fVudNIpx6oTgI8iqhvfJEkZMQc5Wvnvw6k6m6kjVRDQPWfhdKqFclDxs4=
+    language: python
+    python: 3.6
+    script:
+    - git remote rm origin
+    - git remote add origin https://${GITHUB_TOKEN}@github.com/rorymurdock/reqREST.git >/dev/null 2>&1
+    - git fetch
+    - git checkout master
+    - python3 increment_version.py
+    - git add -u
+    - git commit -m "[ci skip] version changed"
+    - git push --set-upstream origin master >/dev/null 2>&1
+    deploy:
+      provider: pypi
+      user: rorymurdock
+      password:
+        secure: "wX8IKmjBW2kpalwpHoEEJKqok6xVb5JdvphsTD33oOiRlPNPxI/leK10LkoM3kSxXW9/SvchpGMGbF7a74qudfIpAp3d2wEx9UpY4Fv9rZ7GYUPa+LDV14G8nUOmsKNbyD7U3w2AmzI+AkjVmJ2GEaB/LTav1wz9FJBU/EnQcRrp5ql8s9S5hyTlwjkRKgtNPykg4axUk79lsqDh3SPUhiFcsqb7zHUZJ+wawebmSwnREchmff089DWD57wYfo2nEaW0IxUSvrRe6oOHN/677Ggk03GwALDHibB11yUebKlrH2cCsljRE6yhjXDOvWb7jxGKjkK6b0WFjf2+W8J3FhcuJjkuCf2drOMAt2dJjJzoAV1uOelDVAkS5bFw1Tl0M0b1s/YGVNRN7RBBe4/HIDM9u+3t5ZGx90UY7n1ewCIn/039PxikBxAOSJRd9nNZMsPq6smOWUbiMzQOec7NA1IzYW4umdkoI3pZpafwLOo1JoXUzGhV355lr1lO7vEZvVLshC94s/Oa9cNwmo8V2hy6hAi/1F1MbEjI/s7YFvtWEZS2doqH/bPLtm+SBLi8UAvim7oW2YU26xVsyv+xeJd248aCFqC3ab4yEon62QPu9k12QqkDlDWc6aPYrsxrsPZusSFQPUAOUTJk+4RFTD6Y0oFZmN1EfRLUKXqLpqI="
+
+stages:
+- test
+- name: Deploy to PyPI
+  if: "(branch = master)"
