@@ -1,0 +1,6 @@
+[run]
+omit =  setup.py
+        increment_version.py
+[report]
+omit =  setup.py
+        increment_version.py
