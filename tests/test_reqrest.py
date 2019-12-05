@@ -2,12 +2,12 @@
 import json
 import random
 import string
-from reqrest import REST as RESTAPI
+from reqrest import REST
 
 # Thanks to https://postman-echo.com
 # For the demo REST API
 
-REST = RESTAPI(url='postman-echo.com', debug=True)
+RESTAPI = REST(url='postman-echo.com', debug=True)
 
 
 # Generate random data for testing
@@ -28,7 +28,7 @@ def test_rest_get():
     query_string[test_param1] = test_param1_value
     query_string[test_param2] = test_param2_value
 
-    response = REST.get('/get', query_string)
+    response = RESTAPI.get('/get', query_string)
 
     assert response.status_code == 200
 
@@ -49,7 +49,7 @@ def test_rest_post():
     payload['body'] = test_body
     payload['userId'] = test_user_id
 
-    response = REST.post("/post", payload)
+    response = RESTAPI.post("/post", payload)
 
     assert response.status_code == 200
 
@@ -71,7 +71,7 @@ def test_rest_put():
     payload['body'] = test_body
     payload['userId'] = test_user_id
 
-    response = REST.put("/put", payload)
+    response = RESTAPI.put("/put", payload)
 
     assert response.status_code == 200
 
@@ -86,13 +86,13 @@ def test_rest_put():
 
 def test_rest_delete():
     """Test DELETE"""
-    response = REST.delete('/delete')
+    response = RESTAPI.delete('/delete')
     assert response.status_code == 200
 
 
 def test_response_headers():
     """Test getting response headers"""
-    response = REST.response_headers('/get')
+    response = RESTAPI.response_headers('/get')
 
     assert response['Content-Type'] == 'application/json; charset=utf-8'
     assert response['Connection'] == 'keep-alive'
@@ -106,7 +106,7 @@ def test_custom_header():
 
     headers = {header_key: header_content}
 
-    crest = RESTAPI(url='postman-echo.com', headers=headers, debug=True)
+    crest = REST(url='postman-echo.com', headers=headers, debug=True)
 
     response = json.loads(crest.get('/headers').text)
 
