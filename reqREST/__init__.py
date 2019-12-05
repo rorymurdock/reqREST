@@ -1,2 +1,4 @@
-name = 'reqREST'
-from .reqREST import REST
+"""init file to import classes"""
+from .reqrest import REST
+
+API = REST()

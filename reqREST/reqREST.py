@@ -1,14 +1,23 @@
+"""Package used with REST APIs"""
 import logging
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
+
 
 # Used for all AW REST API queries
 class REST():
     """REST API Framework"""
 
     # Add the varibles as self.
-    def __init__(self, url='', protocol='https', timeout=10, retries=5, headers=None, proxy=None, debug=False):
+    def __init__(self,
+                 url='',
+                 protocol='https',
+                 timeout=10,
+                 retries=5,
+                 headers=None,
+                 proxy=None,
+                 debug=False):
         # Import Proxy Server settings
         self.proxies = proxy
         self.url = url
@@ -22,8 +31,11 @@ class REST():
         if isinstance(headers, dict):
             self.sessions.headers.update(headers)
 
-        retries = Retry(total=self.retries, backoff_factor=1, status_forcelist=[502, 503, 504])
-        self.sessions.mount('%s://' % protocol, HTTPAdapter(max_retries=retries))
+        retries = Retry(total=self.retries,
+                        backoff_factor=1,
+                        status_forcelist=[502, 503, 504])
+        self.sessions.mount('%s://' % protocol,
+                            HTTPAdapter(max_retries=retries))
 
         # Debugging
         if self.debug:
@@ -37,34 +49,48 @@ class REST():
     # HTTP GET, returns HTTP response object
     def get(self, path, queries=""):
         "HTTP GET"
-        connection = self.sessions.get(
-            self.protocol+'://'+self.url+path, proxies=self.proxies, timeout=self.timeout, params=queries)
+        connection = self.sessions.get(self.protocol + '://' + self.url + path,
+                                       proxies=self.proxies,
+                                       timeout=self.timeout,
+                                       params=queries)
         return connection
 
     # HTTP POST, returns HTTP response object
     def post(self, path, payload=None, queries=""):
         """HTTP POST"""
-        connection = self.sessions.post(
-            self.protocol+'://'+self.url+path, json=payload, proxies=self.proxies, timeout=self.timeout, params=queries)
+        connection = self.sessions.post(self.protocol + '://' + self.url +
+                                        path,
+                                        json=payload,
+                                        proxies=self.proxies,
+                                        timeout=self.timeout,
+                                        params=queries)
         return connection
 
     # HTTP PUT, returns HTTP response object
     def put(self, path, payload, queries=""):
         """HTTP PUT"""
-        connection = self.sessions.put(
-            self.protocol+'://'+self.url+path, data=payload, proxies=self.proxies, timeout=self.timeout, params=queries)
+        connection = self.sessions.put(self.protocol + '://' + self.url + path,
+                                       data=payload,
+                                       proxies=self.proxies,
+                                       timeout=self.timeout,
+                                       params=queries)
         return connection
 
     # HTTP DELETE, returns HTTP response object
     def delete(self, path, queries=""):
         """HTTP DELETE"""
-        connection = self.sessions.delete(
-            self.protocol+'://'+self.url+path, proxies=self.proxies, timeout=self.timeout, params=queries)
+        connection = self.sessions.delete(self.protocol + '://' + self.url +
+                                          path,
+                                          proxies=self.proxies,
+                                          timeout=self.timeout,
+                                          params=queries)
         return connection
 
     # HTTP GET, returns response headers json
     def response_headers(self, path, queries=""):
         """Gets response headers"""
-        connection = self.sessions.get(
-            self.protocol+'://'+self.url+path, proxies=self.proxies, timeout=self.timeout, params=queries)
+        connection = self.sessions.get(self.protocol + '://' + self.url + path,
+                                       proxies=self.proxies,
+                                       timeout=self.timeout,
+                                       params=queries)
         return connection.headers
