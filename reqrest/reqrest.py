@@ -47,50 +47,50 @@ class REST():
             requests_log.propagate = True
 
     # HTTP GET, returns HTTP response object
-    def get(self, path, queries=""):
+    def get(self, path, querystring=""):
         "HTTP GET"
         connection = self.sessions.get(self.protocol + '://' + self.url + path,
                                        proxies=self.proxies,
                                        timeout=self.timeout,
-                                       params=queries)
+                                       params=querystring)
         return connection
 
     # HTTP POST, returns HTTP response object
-    def post(self, path, payload=None, queries=""):
+    def post(self, path, payload=None, querystring=""):
         """HTTP POST"""
         connection = self.sessions.post(self.protocol + '://' + self.url +
                                         path,
                                         json=payload,
                                         proxies=self.proxies,
                                         timeout=self.timeout,
-                                        params=queries)
+                                        params=querystring)
         return connection
 
     # HTTP PUT, returns HTTP response object
-    def put(self, path, payload, queries=""):
+    def put(self, path, payload, querystring=""):
         """HTTP PUT"""
         connection = self.sessions.put(self.protocol + '://' + self.url + path,
                                        data=payload,
                                        proxies=self.proxies,
                                        timeout=self.timeout,
-                                       params=queries)
+                                       params=querystring)
         return connection
 
     # HTTP DELETE, returns HTTP response object
-    def delete(self, path, queries=""):
+    def delete(self, path, querystring=""):
         """HTTP DELETE"""
         connection = self.sessions.delete(self.protocol + '://' + self.url +
                                           path,
                                           proxies=self.proxies,
                                           timeout=self.timeout,
-                                          params=queries)
+                                          params=querystring)
         return connection
 
     # HTTP GET, returns response headers json
-    def response_headers(self, path, queries=""):
+    def response_headers(self, path, querystring=""):
         """Gets response headers"""
         connection = self.sessions.get(self.protocol + '://' + self.url + path,
                                        proxies=self.proxies,
                                        timeout=self.timeout,
-                                       params=queries)
+                                       params=querystring)
         return connection.headers
