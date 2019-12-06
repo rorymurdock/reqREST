@@ -1,17 +1,18 @@
+"""Setup.py"""
 import setuptools
 
 with open("README.md", "r") as fh:
-    long_description = fh.read()
+    LONG_DESCRIPTION = fh.read()
 
 setuptools.setup(
-    name="reqREST",
-    version="0.0.5",
+    name="reqrest",
+    version="0.0.6",
     author="Rory Murdock",
     author_email="rory@itmatic.com.au",
     description="A REST API wrapper for requests",
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    url="https://github.com/rorymurdock/reqREST",
+    url="https://github.com/rorymurdock/reqrest",
     packages=setuptools.find_packages(),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -19,7 +20,5 @@ setuptools.setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
-    install_requires=[
-          'requests',
-    ],
+    install_requires=['requests'],
 )
