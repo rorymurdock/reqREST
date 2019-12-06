@@ -1,4 +1,4 @@
-"""Test for reqREST"""
+"""Test for reqrest"""
 import json
 import random
 import string
@@ -17,7 +17,7 @@ def random_string(string_length=15):
     return ''.join(random.choice(letters) for i in range(string_length))
 
 
-def test_REST_get():
+def test_rest_get():
     """Test GET"""
     test_param1 = random_string()
     test_param1_value = random_string()

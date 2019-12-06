@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
     LONG_DESCRIPTION = fh.read()
 
 setuptools.setup(
-    name="reqREST",
+    name="reqrest",
     version="0.0.6",
     author="Rory Murdock",
     author_email="rory@itmatic.com.au",
