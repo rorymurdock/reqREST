@@ -84,6 +84,29 @@ def test_rest_put():
     assert response['body'] == test_body
 
 
+def test_rest_patch():
+    """Test patch"""
+    test_title = random_string()
+    test_body = random_string()
+    test_user_id = random_string()
+
+    payload = {}
+    payload['title'] = test_title
+    payload['body'] = test_body
+    payload['userId'] = test_user_id
+
+    response = REST.patch("/patch", payload)
+
+    assert response.status_code == 200
+
+    response = json.loads(response.text)['form']
+
+    print(response)
+
+    assert response['userId'] == test_user_id
+    assert response['title'] == test_title
+    assert response['body'] == test_body
+
 def test_rest_delete():
     """Test DELETE"""
     response = REST.delete('/delete')

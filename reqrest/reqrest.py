@@ -86,6 +86,16 @@ class REST():
                                           params=querystring)
         return connection
 
+    # HTTP patch, returns HTTP response object
+    def patch(self, path, payload, querystring=""):
+        """HTTP patch"""
+        connection = self.sessions.patch(self.protocol + '://' + self.url + path,
+                                         data=payload,
+                                         proxies=self.proxies,
+                                         timeout=self.timeout,
+                                         params=querystring)
+        return connection
+
     # HTTP GET, returns response headers json
     def response_headers(self, path, querystring=""):
         """Gets response headers"""
