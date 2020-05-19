@@ -56,11 +56,12 @@ class REST():
         return connection
 
     # HTTP POST, returns HTTP response object
-    def post(self, path, payload=None, querystring=""):
+    def post(self, path, json=None, querystring="", payload=None):
         """HTTP POST"""
         connection = self.sessions.post(self.protocol + '://' + self.url +
                                         path,
-                                        json=payload,
+                                        data=payload,
+                                        json=json,
                                         proxies=self.proxies,
                                         timeout=self.timeout,
                                         params=querystring)

@@ -107,6 +107,7 @@ def test_rest_patch():
     assert response['title'] == test_title
     assert response['body'] == test_body
 
+
 def test_rest_delete():
     """Test DELETE"""
     response = REST.delete('/delete')
@@ -119,7 +120,6 @@ def test_response_headers():
 
     assert response['Content-Type'] == 'application/json; charset=utf-8'
     assert response['Connection'] == 'keep-alive'
-    assert response['Server'] == 'nginx'
 
 
 def test_custom_header():
