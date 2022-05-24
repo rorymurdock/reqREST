@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="reqrest",
-    version="1.0.0",
+    version="1.0.1",
     author="Rory Murdock",
     author_email="rory@itmatic.com.au",
     description="A REST API wrapper for requests",
